@@ -1,11 +1,19 @@
 package com.app.mybatis.mapper;
 
+import com.app.mybatis.domain.dto.PostCountDTO;
 import com.app.mybatis.domain.dto.PostDTO;
+import com.app.mybatis.domain.dto.PostResponseDTO;
+import com.app.mybatis.domain.vo.PostLikeVO;
 import com.app.mybatis.domain.vo.PostVO;
+import jakarta.servlet.http.PushBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 @SpringBootTest
 @Slf4j
@@ -13,6 +21,10 @@ public class PostMapperTests {
 
     @Autowired
     private PostMapper postMapper;
+    @Autowired
+    private PostVO postVO;
+    @Autowired
+    private PostLikeMapper postLikeMapper;
 
     @Test
     public void insertTest(){
@@ -24,8 +36,8 @@ public class PostMapperTests {
     }
 
     @Test
-    public void selectAllTest(){
-        postMapper.selectAll().stream().map(PostDTO::toString).forEach(log::info);
+    public void selectAllTest() {
+        postMapper.selectAll(1L).stream().map(PostDTO::toString).forEach(log::info);
     }
 
     @Test
@@ -63,6 +75,93 @@ public class PostMapperTests {
         postMapper.updatePostReadCount(2L);
     }
 
+    @Test
+    public void insertTest2() {
+        for(int i = 0; i < 50; i++) {
+            PostVO postVO = new PostVO();
+            postVO.setPostTitle("테스트 게시글" + (i + 1));
+            postVO.setPostContent("테스트 내용" + (i + 1));
+            postVO.setMemberId(1L);
+            postMapper.insert(postVO);
+        }
+    }
 
+    @Test
+    public void updateReadCountTest() {
+        Random random = new Random();
+        random.nextInt(50);
+        for(int i = 0; i < 5000; i++) {
+            Long id = Long.valueOf(random.nextInt(51));
+            postMapper.updatePostReadCount(id);
+        }
+    }
 
+    @Test
+    public void selectAllWithOrderTest() {
+        HashMap<String, Object> orders = new HashMap<>();
+        orders.put("order", "popular");
+        orders.put("cursor", 1);
+        orders.put("limit", 5);
+        postMapper.selectAllWithOrder(orders)
+                .stream()
+                .map(PostDTO::toString)
+                .forEach(log::info);
+    }
+
+    @Test
+    public void selectTotalPostCountAndTotalPageCountTest() {
+        int limit = 10;
+        PostCountDTO postCountDTO = postMapper.selectTotalPostCountAndTotalPageCount(limit);
+        log.info("postCountDTO : {}", postCountDTO);
+    }
+
+//    게시판 목록 조회
+    @Test
+    public void selectPostTest() {
+        HashMap<String, Object> orders = new HashMap<>();
+        orders.put("order", "popular");
+        orders.put("cursor", 1);
+        orders.put("limit", 10);
+        int limit = 10;
+        List<PostDTO> posts = postMapper.selectAllWithOrder(orders);
+        PostCountDTO postCountDTO = postMapper.selectTotalPostCountAndTotalPageCount(limit);
+
+//      최종 응답
+        PostResponseDTO postResponseDTO = new PostResponseDTO();
+        postResponseDTO.setTotalPostCount(postCountDTO.getTotalPostCount());
+        postResponseDTO.setPostPageCount(postCountDTO.getTotalPageCount());
+        postResponseDTO.setPosts(posts);
+
+        log.info("postResponseDTO : {}", postResponseDTO);
+    }
+
+    @Test
+    public void selectAllWithKeywordTest() {
+        HashMap<String, Object> orders = new HashMap<>();
+        orders.put("order", "popular");
+        orders.put("cursor", 1);
+        orders.put("limit", 10);
+        orders.put("keywordType", "3");
+        orders.put("keyword", "내");
+        List<PostDTO> posts = postMapper.selectAllWithKeyword(orders);
+        posts.forEach(post -> log.info("post : {}", post));
+        //log.info("posts : {}", posts);
+    }
+
+//    좋아요
+    @Test
+    public void postLikeTest() {
+        PostLikeVO postLikeVO = new PostLikeVO();
+
+//        1 ~ 50
+        for(int i = 0; i < 50; i++) {
+            Random random = new Random();
+            int randomNumber = random.nextInt(1,51);
+            postLikeVO.setPostId(Long.valueOf(randomNumber));
+
+            randomNumber = random.nextInt(1,4);
+            postLikeVO.setMemberId(Long.valueOf(randomNumber));
+            postLikeMapper.insert(postLikeVO);
+        }
+    }
 }
