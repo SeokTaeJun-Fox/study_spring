@@ -1,5 +1,6 @@
 package com.app.controller.controller;
 
+import com.app.controller.domain.vo.MemberVO;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.ArrayList;
 
 @Slf4j
-@Controller
+@Controller     //페이지의 응답
 @RequestMapping("/ex/*")
 public class ExampleController {
     //doGet과 똑같다
@@ -33,7 +34,7 @@ public class ExampleController {
         //ex01 -> templates/ex01.html
         //ex/ex/ex01 -> templates/ex/ex/ex01.html
         //응답되는 페이지의 파일 경로
-        return "ex01";
+        return "ex01";  //최상위 경로 : templates
     }
 
     @PostMapping("/ex01")
@@ -91,5 +92,25 @@ public class ExampleController {
         log.info("name: {}, hobby: {}", name, hobby);
 
         return "ex05";
+    }
+
+    @GetMapping("/ex06")
+    public String goToEx06() {
+        return "ex06";
+    }
+
+    //redirect
+    @GetMapping("/ex06-complete")
+    public String ex06Complete(@ModelAttribute("memberName") String memberName) {
+        return "ex06-complete";
+    }
+
+    //회원가입 완료 후 000님 환영합니다 출력.
+    @PostMapping("/ex06")
+    public String ex06(MemberVO memberVO) {
+        log.info("응답이 들어옴");
+        log.info("memberVO: {}", memberVO);
+//        return "redirect:/ex/ex06-complete?memberName=" + memberVO.getMemberName();
+          return "redirect:/ex/ex06-complete";
     }
 }

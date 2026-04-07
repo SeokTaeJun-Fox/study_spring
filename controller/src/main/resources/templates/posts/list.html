@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>게시판 목록</title>
+</head>
+<body>
+    <table border="1px">
+        <th>id</th>
+        <th>제목</th>
+        <th>내용</th>
+        <th>멤버id</th>
+        <th>조회수</th>
+        <tbody th:each="post : ${posts}">
+        <tr>
+            <td th:text="${post.id}"></td>
+            <td th:text="${post.postTitle}"></td>
+            <td th:text="${post.postContent}"></td>
+            <td th:text="${post.memberId}"></td>
+            <td th:text="${post.postReadCount}"></td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>
