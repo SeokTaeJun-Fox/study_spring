@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>수정</title>
+</head>
+<body>
+    <form th:action="@{/posts/update}" method="post" th:object="${post}">
+        <input type="hidden" th:field="*{id}" value="*{id}" />
+        <input type="text" th:field="*{postTitle}" value="*{postTitle}" placeholder="제목을 입력하세요"/> <br/>
+        <input type="text" th:field="*{postContent}" value="*{postContent}" placeholder="내용을 입력하세요">
+        <button>수정하기</button>
+    </form>
+</body>
+</html>

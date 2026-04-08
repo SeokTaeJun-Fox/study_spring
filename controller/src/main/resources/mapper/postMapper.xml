@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.controller.mapper.PostMapper">
-    <select id="selectAll" resultType="PostVO">
-        SELECT ID, POST_TITLE, POST_CONTENT, MEMBER_ID, POST_READ_COUNT
-        FROM TBL_POST
+    <select id="selectAll" resultType="PostDTO">
+        SELECT
+            TBP.ID, TBP.POST_TITLE, TBP.POST_CONTENT, TBP.MEMBER_ID,
+            TBP.POST_READ_COUNT, TBM.MEMBER_EMAIL, TBM.MEMBER_NAME
+        FROM TBL_POST TBP
+                 JOIN TBL_MEMBER TBM
+                      ON TBP.MEMBER_ID = TBM.ID
     </select>
 </mapper>

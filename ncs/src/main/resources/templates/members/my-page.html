@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>마이 페이지</title>
+</head>
+<body>
+<div th:object="${session.member}">
+    <h1 id="memberEmail" th:text="*{memberEmail}"></h1>
+    <h1 id="memberName" th:text="*{memberName}"></h1>
+</div>
+
+<form action="/members/update" method="get">
+    <button>회원 수정</button>
+</form>
+<form action="/members/logout" method="post">
+    <button>로그 아웃</button>
+</form>
+<form action="/members/withdraw" method="post">
+    <button>회원 탈퇴</button>
+</form>
+
+</body>
+
+</html>
