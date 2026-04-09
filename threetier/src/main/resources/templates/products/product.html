@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form th:action="@{/products/insert}" method="post" th:object="${productVO}">
+            <input type="text" th:text="*{productName}" th:field="*{productName}" placeholder="상품 이름을 쓰시오"/><br />
+            <input type="text" th:text="*{productPrice}" th:field="*{productPrice}" placeholder="상품 가격을 쓰시오"/><br />
+            <input type="text" th:text="*{productStock}" th:field="*{productStock}" placeholder="상품 재고를 쓰시오"/><br />
+            <input type="text" th:text="*{productBrand}" th:field="*{productBrand}" placeholder="상품 브랜드를 쓰시오"/><br />
+        <button>상품 추가</button>
+    </form>
+</body>
+</html>

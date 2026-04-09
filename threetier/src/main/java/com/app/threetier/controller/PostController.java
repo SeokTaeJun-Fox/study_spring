@@ -4,6 +4,7 @@ import com.app.threetier.mapper.PostMapper;
 import com.app.threetier.mapper.PostMapper;
 import com.app.threetier.service.PostService;
 import com.app.threetier.vo.PostDTO;
+import com.app.threetier.vo.PostVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/posts/*")
-@RequiredArgsConstructor
+@RequiredArgsConstructor    //생성자 주입 : 불변성
 @Slf4j
 public class PostController {
 
@@ -37,15 +38,28 @@ public class PostController {
         model.addAttribute("post", postService.getPost(id));
     }
 
-    @PostMapping("/update")
-    public RedirectView update(PostDTO postDTO) {
-        postService.updatePost(postDTO);
-        return new RedirectView("/posts/list");
+//    @PostMapping("/update")
+//    public RedirectView update(PostDTO postDTO) {
+//        postService.updatePost(postDTO);
+//        return new RedirectView("/posts/list");
+//    }
+
+//    @GetMapping("/delete")
+//    public RedirectView delete(Long id) {
+//        log.info("id: {}", id);
+//        postService.deletePost(id);
+//        return new RedirectView("/posts/list");
+//    }
+
+    //new
+    @PostMapping("/update-ok")
+    public RedirectView updateOK(PostVO postVO) {
+        postService.updatePost(postVO);
+        return new RedirectView("/posts/read?id=" + postVO.getId());
     }
 
-    @GetMapping("/delete")
-    public RedirectView delete(Long id) {
-        log.info("id: {}", id);
+    @GetMapping("/delete-ok")
+    public RedirectView deleteOK(Long id) {
         postService.deletePost(id);
         return new RedirectView("/posts/list");
     }

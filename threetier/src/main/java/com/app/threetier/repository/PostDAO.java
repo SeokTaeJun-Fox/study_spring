@@ -2,6 +2,7 @@ package com.app.threetier.repository;
 
 import com.app.threetier.mapper.PostMapper;
 import com.app.threetier.vo.PostDTO;
+import com.app.threetier.vo.PostVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -24,8 +25,12 @@ public class PostDAO {
         return postMapper.select(id);
     }
 
-    public void update(PostDTO postDTO) {
-        postMapper.update(postDTO);
+    public void update(PostVO postVO) {
+        postMapper.update(postVO);
+    }
+
+    public void updateReadCount(Long id) {
+        postMapper.updateReadCount(id);
     }
 
     public void delete(Long id) {

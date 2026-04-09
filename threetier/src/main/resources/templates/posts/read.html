@@ -8,17 +8,13 @@
     <title>게시글 상세보기</title>
 </head>
 <body>
-    <th:block th:object="${post}">
-        <p th:text="*{postTitle}"></p>
-        <p th:text="*{postContent}"></p>
-        <p th:text="*{memberName}"></p>
-
-        <a th:href="@{/posts/update(id=*{id})}" th:text="수정하기"></a>
-        <a th:href="@{/posts/delete(id=*{id})}" th:text="삭제하기"></a>
-
-<!--        <form th:action="@{/posts/update(id=*{id})}" method="get">-->
-<!--            <button>수정하기</button>-->
-<!--        </form>-->
-    </th:block>
+<th:block th:object="${post}">
+    <p th:text="*{postTitle}"></p>
+    <p th:text="*{postContent}"></p>
+    <p th:text="*{memberName}"></p>
+    <p th:text="*{postReadCount}"></p>
+    <a th:href="@{/posts/update(id=*{id})}">수정하기</a>
+    <a th:href="@{/posts/delete-ok(id=*{id})}">삭제하기</a>
+</th:block>
 </body>
 </html>

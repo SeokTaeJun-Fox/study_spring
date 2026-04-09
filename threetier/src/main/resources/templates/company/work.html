@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>근무</title>
+</head>
+<body>
+    <h1 th:text="${session.name}"></h1>
+    <button>퇴근</button>
+</body>
+<script th:inline="javascript">
+    const date = new Date();
+    const button = document.querySelector("button");
+
+    button.addEventListener("click", () => {
+        if(date.getHours() >= 16) {
+            location.href = "leaveWork";
+        } else {
+            alert("업무시간");
+        }
+    })
+
+
+</script>
+</html>
