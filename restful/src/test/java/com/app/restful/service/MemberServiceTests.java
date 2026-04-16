@@ -44,7 +44,7 @@ public class MemberServiceTests {
 
     @Test
     public void deleteMemberTest() {
-        memberService.withdraw(44L);
+        memberService.withdraw(27L);
     }
 
 }
