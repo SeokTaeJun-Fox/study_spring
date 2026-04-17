@@ -90,7 +90,7 @@ public class MemberAPI {
     @ApiResponse(responseCode = "401", description = "권한 없음")
     public ResponseEntity<ApiResponseDTO> login(@RequestBody MemberVO memberVO) { //MemberLoginRequestDTO
         MemberResponseDTO find = memberService.login(memberVO);
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponseDTO.of("로그인 성공"));
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponseDTO.of("로그인 성공", find));
     }
 
     @Operation(summary = "회원 수정 서비스", description = "회원 정보를 받아서 회원 수정하는 서비스")
@@ -119,7 +119,7 @@ public class MemberAPI {
     // 삭제 컨트롤러
     @DeleteMapping("/{id}")
     @Operation(summary = "회원 탈퇴 서비스", description = "회원 아이디로 회원 탈퇴해주는 서비스")
-    @ApiResponse(responseCode = "204", description = "회원 탈퇴 성공")
+    @ApiResponse(responseCode = "200", description = "회원 탈퇴 성공")
     @ApiResponse(responseCode = "401", description = "토큰 없음")
     @ApiResponse(responseCode = "403", description = "권한 없음")
     @Parameter(
@@ -132,7 +132,7 @@ public class MemberAPI {
     )
     public ResponseEntity<ApiResponseDTO> withdraw(@PathVariable Long id) {
         memberService.withdraw(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT
+        return ResponseEntity.status(HttpStatus.OK
         ).body(ApiResponseDTO.of("회원 삭제 성공"));
     }
 

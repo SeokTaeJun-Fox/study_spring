@@ -111,7 +111,7 @@ public class PostAPI {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "게시글 삭제 서비스", description = "아이디로 게시글을 삭제하는 서비스")
-    @ApiResponse(responseCode = "204", description = "게시글 삭제 완료")
+    @ApiResponse(responseCode = "200", description = "게시글 삭제 완료")
     @ApiResponse(responseCode = "404", description = "게시글 없음")
     @Parameter(
             name = "id",
@@ -123,6 +123,6 @@ public class PostAPI {
     )
     public ResponseEntity<ApiResponseDTO> deletePost(@PathVariable Long id) {
         postService.deletePost(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ApiResponseDTO.of("게시글 삭제 성공"));
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponseDTO.of("게시글 삭제 성공"));
     }
 }
