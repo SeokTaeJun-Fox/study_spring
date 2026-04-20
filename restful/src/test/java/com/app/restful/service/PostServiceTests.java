@@ -27,11 +27,11 @@ public class PostServiceTests {
 
     @Test
     public void postWriteTest(){
-        PostWriteRequestDTO postWriteRequestDTO = new PostWriteRequestDTO();
-        postWriteRequestDTO.setMemberId(1L);
-        postWriteRequestDTO.setPostTitle("테스트 제목2");
-        postWriteRequestDTO.setPostContent("테스트 내용2");
-        postService.writePost(postWriteRequestDTO);
+            PostWriteRequestDTO postWriteRequestDTO = new PostWriteRequestDTO();
+            postWriteRequestDTO.setMemberId(1L);
+            postWriteRequestDTO.setPostTitle("테스트 제목");
+            postWriteRequestDTO.setPostContent("테스트 내용");
+            postService.writePost(postWriteRequestDTO);
     }
 
     @Test
