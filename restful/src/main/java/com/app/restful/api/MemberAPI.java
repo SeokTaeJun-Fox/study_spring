@@ -85,9 +85,9 @@ public class MemberAPI {
     @PostMapping("login")
     @Operation(summary = "로그인 서비스", description = "이메일과 비밀번호를 검증 후 로그인 서비스")
     @ApiResponse(responseCode = "200", description = "로그인 성공")
-    @ApiResponse(responseCode = "401", description = "로그인 실패")
+    @ApiResponse(responseCode = "400", description = "로그인 실패")
     @ApiResponse(responseCode = "401", description = "토큰 없음")
-    @ApiResponse(responseCode = "401", description = "권한 없음")
+    @ApiResponse(responseCode = "403", description = "권한 없음")
     public ResponseEntity<ApiResponseDTO> login(@RequestBody MemberVO memberVO) { //MemberLoginRequestDTO
         MemberResponseDTO find = memberService.login(memberVO);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponseDTO.of("로그인 성공", find));
