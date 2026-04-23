@@ -8,6 +8,7 @@ package com.app.oauth.domain.vo;
 //MEMBER_NICKNAME VARCHAR2(255) DEFAULT '개복치 1단계',
 //MEMBER_PROVIDER VARCHAR2(255) DEFAULT 'local'
 
+import com.app.oauth.domain.dto.MemberDTO;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -20,5 +21,22 @@ public class MemberVO {
     private String memberPicture;
     private String memberName;
     private String memberNickname;
-    private String memberProvider;
+    //private String memberProvider;
+
+//    {
+////        초기화 블럭
+//        this.setMemberPicture("default.jpg");
+//        this.setMemberNickname("개복치 1단계");
+//    }
+
+    public static MemberVO from(MemberDTO memberJoinDTO){
+        MemberVO vo = new MemberVO();
+        vo.setId(memberJoinDTO.getId());
+        vo.setMemberEmail(memberJoinDTO.getMemberEmail());
+        vo.setMemberPassword(memberJoinDTO.getMemberPassword());
+        vo.setMemberPicture(memberJoinDTO.getMemberPicture() != null ? memberJoinDTO.getMemberPicture() : "default.jpg");
+        vo.setMemberName(memberJoinDTO.getMemberName());
+        vo.setMemberNickname(memberJoinDTO.getMemberNickname() != null ? memberJoinDTO.getMemberNickname() : "개복치 1단계");
+        return vo;
+    }
 }
