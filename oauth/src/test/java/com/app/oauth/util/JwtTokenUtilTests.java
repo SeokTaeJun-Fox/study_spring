@@ -11,12 +11,12 @@ import java.util.Map;
 
 @SpringBootTest
 @Slf4j
-public class JwtUtilTests {
+public class JwtTokenUtilTests {
     @Autowired
     public JwtTokenUtil jwtTokenUtil;
 
     @Test
-    public void generateAccessTokenTest() {
+    public void generateTokenTest(){
 
         Map<String, String> claims = new HashMap<>();
         claims.put("id", "1");
@@ -24,8 +24,8 @@ public class JwtUtilTests {
 
         String accessToken = jwtTokenUtil.generateAccessToken(claims);
         String refreshToken = jwtTokenUtil.generateRefreshToken(claims);
-        log.info("accessToken:{}", accessToken);
-        log.info("refreshToken:{}", refreshToken);
+        log.info("accessToken : {}", accessToken);
+        log.info("refreshToken : {}", refreshToken);
     }
 
     @Test
@@ -33,10 +33,10 @@ public class JwtUtilTests {
         Map<String, String> claims = new HashMap<>();
         claims.put("id", "1");
         claims.put("memberEmail", "hong123@gmail.com");
-
         String accessToken = jwtTokenUtil.generateAccessToken(claims);
+
         Claims parseClaims = jwtTokenUtil.parseToken(accessToken);
-        log.info("parseClaims:{}", parseClaims);
+        log.info("parseClaims : {}", parseClaims);
     }
 
     @Test
@@ -46,6 +46,7 @@ public class JwtUtilTests {
         claims.put("memberEmail", "hong123@gmail.com");
         String accessToken = jwtTokenUtil.generateAccessToken(claims);
 
-        log.info("{}", jwtTokenUtil.validateToken(accessToken));
+        log.info("{}", jwtTokenUtil.validateToken("이규학"));
     }
+
 }

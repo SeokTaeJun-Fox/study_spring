@@ -32,9 +32,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, CorsConfigurationSource corsConfigurationSource) throws Exception{
 
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable()) // 시큐리티 검증 경로
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll()); // 모든 경로 해제
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .csrf(csrf -> csrf.disable()) // 시큐리티 검증 경로
+            .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll()); // 모든 경로 해제
 
         return http.build();
     }

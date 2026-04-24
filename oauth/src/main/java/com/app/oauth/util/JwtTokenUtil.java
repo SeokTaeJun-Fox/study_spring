@@ -1,7 +1,6 @@
 package com.app.oauth.util;
 
 import io.jsonwebtoken.*;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -18,48 +17,39 @@ public class JwtTokenUtil {
 
     // Access 토큰 생성
     public String generateAccessToken(Map<String, String> claims) {
-        String id = claims.get("id");
-        String memberEmail = claims.get("memberEmail");
-
-        //평균 1분 ~ 5분
-        long expirationTimeInMillis = 1000 * 60 * 60 * 24;
+        // 평균 1분 ~ 5분(수업 테스트용 24시간)
+//        long expirationTimeInMillis = 1000 * 60 * 60 * 24;
+        Long expirationTimeInMillis = 1000L * 10;
         Date expirationDate = new Date(System.currentTimeMillis() + expirationTimeInMillis);
-
-        // JWT를 발급한 곳
-        claims.put("issuer", "a class");
 
         return Jwts
                 .builder()
                 .claims(claims) // 클레임 추가
-                .expiration(expirationDate) // 시간
-                .signWith(SignatureAlgorithm.HS256, secretKey)  // sha-256 알고리즘
+                .expiration(expirationDate) // 만료시간
+                .signWith(SignatureAlgorithm.HS256, secretKey) // sha-256 알고리즘
                 .setHeaderParam("typ", "JWT") // 타입 JWT
                 .compact();
     }
 
-    // Refresh 토큰 생성
+    // generateRefreshToken
     public String generateRefreshToken(Map<String, String> claims) {
-        String id = claims.get("id");
-        String memberEmail = claims.get("memberEmail");
-
-        //평균 1주일 ~ 한 달
-        long expirationTimeInMillis = 1000 * 60 * 60 * 24 * 30;
+        // (평균 1주일 ~ 한 달)
+        Long expirationTimeInMillis = 1000L * 60 * 60 * 24 * 30;
         Date expirationDate = new Date(System.currentTimeMillis() + expirationTimeInMillis);
-
-        // JWT를 발급한 곳
-        claims.put("issuer", "a class");
 
         return Jwts
                 .builder()
                 .claims(claims) // 클레임 추가
-                .expiration(expirationDate) // 시간
-                .signWith(SignatureAlgorithm.HS256, secretKey)  // sha-256 알고리즘
+                .expiration(expirationDate) // 만료시간
+                .signWith(SignatureAlgorithm.HS256, secretKey) // sha-256 알고리즘
                 .setHeaderParam("typ", "JWT") // 타입 JWT
                 .compact();
     }
 
-    // 토큰 파싱(data => claim)
+
+    // 토큰 파싱(token -> claim)
     public Claims parseToken(String token) {
+        log.info("token : {}", token);
         try {
             return Jwts.parser()
                     .setSigningKey(secretKey)
@@ -67,26 +57,25 @@ public class JwtTokenUtil {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (ExpiredJwtException e) {
-            throw new RuntimeException("만료시간 초과 오류");
+            throw new RuntimeException();
         } catch (UnsupportedJwtException e) {
-            throw new RuntimeException("JWT type이 오류");
+            throw new RuntimeException();
         } catch (MalformedJwtException e) {
-            throw new RuntimeException("token 정보 오류");
+            throw new RuntimeException();
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("claim 오류");
+            throw new RuntimeException();
         }
     }
 
     // 토큰 유효성 검사
-
     public Map<String, Object> validateToken(String token) {
         Map<String, Object> result = new HashMap<>();
         try {
             Jwts.parser()
                     .setSigningKey(secretKey)
                     .build()
-                    .parseClaimsJws(token)
-                    .getBody();
+                    .parseClaimsJws(token);
+
             result.put("success", true);
             result.put("message", "토큰 파싱 완료");
             return result;
@@ -97,4 +86,5 @@ public class JwtTokenUtil {
             return result;
         }
     }
+
 }
