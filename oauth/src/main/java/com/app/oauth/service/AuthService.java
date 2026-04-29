@@ -11,6 +11,9 @@ public interface AuthService {
     // 소셜 로그인
     public JwtTokenDTO socialLogin(MemberDTO memberDTO);
 
+    // 로그아웃
+    public void logout(JwtTokenDTO jwtTokenDTO);
+
     // Redis에 refresh Token 저장
     public boolean saveRefreshToken(JwtTokenDTO jwtTokenDTO);
 
@@ -25,4 +28,16 @@ public interface AuthService {
 
     // refresh 토큰을 검증하고, 새로운 accessToken 발급 서비스
     public JwtTokenDTO reissueAccessToken(JwtTokenDTO jwtTokenDTO);
+
+    // 이메일 인증 코드 발송
+    public boolean sendMemberEmailVerificationCode(String memberEmail);
+
+    // 이메일 인증 코드 발송
+    public boolean verifyMemberEmailVerificationCode(String memberEmail, String code);
+
+    // 핸드폰 인증 코드 발송
+    public boolean sendMemberPhoneVerificationCode(String memberPhone);
+
+    // 핸드폰 인증 코드 검증
+    public boolean verifyMemberPhoneVerificationCode(String memberPhone, String code);
 }

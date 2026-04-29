@@ -29,6 +29,10 @@ public class ApiResponseDTO<T> {
         this.data = data;
     }
 
+    public static <T> ApiResponseDTO<T> of(boolean success, String message) {
+        return new ApiResponseDTO<T>(success, message);
+    }
+
     public static <T>ApiResponseDTO<T> of(String message){
         return new ApiResponseDTO<>(message);
     }
