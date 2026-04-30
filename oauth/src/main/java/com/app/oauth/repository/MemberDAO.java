@@ -38,6 +38,11 @@ public class MemberDAO {
         memberMapper.update(memberVO);
     }
 
+    // 회원 썸네일 변경
+    public void updatePicture(MemberVO memberVO){
+        memberMapper.updatePicture(memberVO);
+    }
+
     //    회원 삭제
     public void delete(Long id){
         memberMapper.delete(id);

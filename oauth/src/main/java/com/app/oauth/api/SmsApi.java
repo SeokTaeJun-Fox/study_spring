@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/sms")
 @RequiredArgsConstructor
-public class smsApi {
+public class SmsApi {
 
     private final AuthService authService;
 
