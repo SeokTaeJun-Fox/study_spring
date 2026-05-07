@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.ResponseBytes;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -48,17 +50,17 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public byte[] getDisplayPath(String fileName) {
+    public ResponseBytes<GetObjectResponse> getDisplayPath(String fileName) {
         String key = fileName.replaceFirst("/", "");
-        byte[] bytes = null;
+        ResponseBytes<GetObjectResponse> responseResponseBytes = null;
 
         try {
-            bytes = awsS3Util.display(key);
+            responseResponseBytes = awsS3Util.display(key);
         } catch (Exception e) {
             throw new FileException("파일 조회 실패", HttpStatus.BAD_REQUEST);
         }
 
-        return bytes;
+        return responseResponseBytes;
     }
 
 }
